@@ -1,0 +1,11 @@
+{
+  "local-tomcat.tomcatInstances": [
+    {
+      "name": "MyTomcat",
+      "catalinaHome": "C:\\apache-tomcat-9.0.115",
+      "deploymentPort": 8080
+    }
+  ],
+  "local-tomcat.warDir": "demo/target",
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
