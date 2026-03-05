@@ -26,6 +26,7 @@ public class SaleController {
     private SaleService saleService;
 
     // POST — Create a sale
+    // Usage: POST /api/sales/add
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addSale(@RequestBody Sale sale) {
         String response = saleService.saveSale(sale);
@@ -36,6 +37,7 @@ public class SaleController {
     }
 
     // GET — All sales
+    // Usage: GET /api/sales/all
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllSales() {
         List<Sale> sales = saleService.getAllSales();
@@ -55,7 +57,7 @@ public class SaleController {
     }
 
     // GET — By customer
-    // Usage: GET /api/sales/customer?customerId=abc-uuid
+    // Usage: GET /api/sales/customer?customerId=uuid
     @GetMapping(value = "/customer", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getSalesByCustomer(@RequestParam String customerId) {
         List<Sale> sales = saleService.getSalesByCustomer(customerId);
@@ -82,7 +84,7 @@ public class SaleController {
     public ResponseEntity<?> getSalesByPaymentMethod(@RequestParam Sale.PaymentMethod paymentMethod) {
         List<Sale> sales = saleService.getSalesByPaymentMethod(paymentMethod);
         if (sales.isEmpty()) {
-            return new ResponseEntity<>("No sales found for payment method: " + paymentMethod, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No sales found for: " + paymentMethod, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(sales, HttpStatus.OK);
     }

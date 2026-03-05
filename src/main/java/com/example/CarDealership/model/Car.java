@@ -2,6 +2,8 @@ package com.example.CarDealership.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,12 +32,12 @@ public class Car {
     @Column(nullable = false)
     private double price;
 
-    // Many-to-Many: A car can appear in many sales
+    // Many-to-Many inverse side
     @ManyToMany(mappedBy = "cars")
+    @JsonIgnore
     private List<Sale> sales;
 
-    // ─── Getters & Setters ──────────────────────
-
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

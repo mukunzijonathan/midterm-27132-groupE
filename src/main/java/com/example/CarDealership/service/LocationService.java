@@ -15,7 +15,6 @@ public class LocationService {
     @Autowired
     private LocationRepository locationRepository;
 
-    // Save any location level
     public String saveLocation(Location location) {
         if (locationRepository.existsByNameAndType(
                 location.getName(), location.getType())) {
@@ -25,37 +24,39 @@ public class LocationService {
         return location.getType() + " saved successfully.";
     }
 
-    // Get all locations
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }
 
-    // Get by ID
     public Optional<Location> getLocationById(String id) {
         return locationRepository.findById(id);
     }
 
-    // Get all provinces
     public List<Location> getAllProvinces() {
         return locationRepository.findByType("PROVINCE");
     }
 
-    // Get all districts under a province
-    public List<Location> getDistrictsByProvince(String provinceId) {
-        return locationRepository.findByParent_Id(provinceId);
-    }
-
-    // Get children of any location
     public List<Location> getChildren(String parentId) {
         return locationRepository.findByParent_Id(parentId);
     }
 
-    // Get by name
     public List<Location> getByName(String name) {
         return locationRepository.findByName(name);
     }
 
-    // Delete
+    public String updateLocation(String id, Location updatedLocation) {
+        Optional<Location> existing = locationRepository.findById(id);
+        if (existing.isPresent()) {
+            Location location = existing.get();
+            location.setName(updatedLocation.getName());
+            location.setType(updatedLocation.getType());
+            location.setParent(updatedLocation.getParent());
+            locationRepository.save(location);
+            return "Location updated successfully.";
+        }
+        return "Location not found.";
+    }
+
     public String deleteLocation(String id) {
         if (locationRepository.existsById(id)) {
             locationRepository.deleteById(id);

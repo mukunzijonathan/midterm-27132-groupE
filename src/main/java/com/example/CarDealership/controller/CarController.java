@@ -27,6 +27,7 @@ public class CarController {
     private CarService carService;
 
     // POST — Add a car
+    // Usage: POST /api/cars/add
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addCar(@RequestBody Car car) {
         String response = carService.saveCar(car);
@@ -37,6 +38,7 @@ public class CarController {
     }
 
     // GET — All cars
+    // Usage: GET /api/cars/all
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllCars() {
         List<Car> cars = carService.getAllCars();
@@ -56,7 +58,7 @@ public class CarController {
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
-    // GET — Sorted by price
+    // GET — Sorted by price ascending
     // Usage: GET /api/cars/sorted/price
     @GetMapping(value = "/sorted/price", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCarsSortedByPrice() {
@@ -67,7 +69,7 @@ public class CarController {
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
-    // GET — Sorted by year
+    // GET — Sorted by year descending
     // Usage: GET /api/cars/sorted/year
     @GetMapping(value = "/sorted/year", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCarsSortedByYear() {

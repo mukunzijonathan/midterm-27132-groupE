@@ -15,7 +15,6 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // Save a new employee
     public String saveEmployee(Employee employee) {
         if (employeeRepository.existsByEmail(employee.getEmail())) {
             return "Email already exists.";
@@ -24,27 +23,22 @@ public class EmployeeService {
         return "Employee saved successfully.";
     }
 
-    // Get all employees
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    // Get by ID
     public Optional<Employee> getEmployeeById(Long id) {
         return employeeRepository.findById(id);
     }
 
-    // Get by province name
-    public List<Employee> getEmployeesByProvince(String province) {
-        return employeeRepository.findByLocation_Province(province);
+    public List<Employee> getEmployeesByLocationName(String name) {
+        return employeeRepository.findByLocation_Name(name);
     }
 
-    // Get by province code
-    public List<Employee> getEmployeesByProvinceCode(String provinceCode) {
-        return employeeRepository.findByLocation_Province(provinceCode);
+    public List<Employee> getEmployeesByProvince(String provinceName) {
+        return employeeRepository.findByProvinceName(provinceName);
     }
 
-    // Update
     public String updateEmployee(Long id, Employee updatedEmployee) {
         Optional<Employee> existing = employeeRepository.findById(id);
         if (existing.isPresent()) {
@@ -59,7 +53,6 @@ public class EmployeeService {
         return "Employee not found.";
     }
 
-    // Delete
     public String deleteEmployee(Long id) {
         if (employeeRepository.existsById(id)) {
             employeeRepository.deleteById(id);

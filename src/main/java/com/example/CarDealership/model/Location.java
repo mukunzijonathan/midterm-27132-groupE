@@ -23,12 +23,13 @@ public class Location {
     private String id;
 
     @Column(nullable = false)
-    private String name;        // e.g. "Kigali", "Gasabo", "Kimironko"
+    private String name;
 
+    // PROVINCE, DISTRICT, SECTOR, CELL, VILLAGE
     @Column(nullable = false)
-    private String type;        // "PROVINCE", "DISTRICT", "SECTOR", "CELL", "VILLAGE"
+    private String type;
 
-    // Self-referencing — parent is null for Province
+    // Self-reference — Province has parent = null
     @ManyToOne
     @JoinColumn(name = "parent_id")
     @JsonIgnore
@@ -39,8 +40,7 @@ public class Location {
     @JsonIgnore
     private List<Location> children;
 
-    // ─── Getters & Setters ──────────────────────
-
+    // Getters & Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

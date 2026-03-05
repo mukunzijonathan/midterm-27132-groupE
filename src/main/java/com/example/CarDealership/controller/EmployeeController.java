@@ -26,6 +26,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     // POST — Add an employee
+    // Usage: POST /api/employees/add
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
         String response = employeeService.saveEmployee(employee);
@@ -36,6 +37,7 @@ public class EmployeeController {
     }
 
     // GET — All employees
+    // Usage: GET /api/employees/all
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllEmployees() {
         List<Employee> employees = employeeService.getAllEmployees();
@@ -46,7 +48,7 @@ public class EmployeeController {
     }
 
     // GET — By ID
-    // Usage: GET /api/employees/getById?id=5
+    // Usage: GET /api/employees/getById?id=1
     @GetMapping(value = "/getById", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getEmployeeById(@RequestParam Long id) {
         return employeeService.getEmployeeById(id)
@@ -54,30 +56,30 @@ public class EmployeeController {
             .orElse(new ResponseEntity<>("Employee not found.", HttpStatus.NOT_FOUND));
     }
 
-    // GET — By province name
-    // Usage: GET /api/employees/province?province=Kigali
-    @GetMapping(value = "/province", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByProvince(@RequestParam String province) {
-        List<Employee> employees = employeeService.getEmployeesByProvince(province);
+    // GET — By location name
+    // Usage: GET /api/employees/location?name=Gasabo
+    @GetMapping(value = "/location", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getByLocationName(@RequestParam String name) {
+        List<Employee> employees = employeeService.getEmployeesByLocationName(name);
         if (employees.isEmpty()) {
-            return new ResponseEntity<>("No employees found in province: " + province, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No employees found for location: " + name, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
-    // GET — By province code
-    // Usage: GET /api/employees/provinceCode?provinceCode=KGL
-    @GetMapping(value = "/provinceCode", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByProvinceCode(@RequestParam String provinceCode) {
-        List<Employee> employees = employeeService.getEmployeesByProvinceCode(provinceCode);
+    // GET — By province name (traverses full tree)
+    // Usage: GET /api/employees/province?name=Kigali
+    @GetMapping(value = "/province", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getByProvince(@RequestParam String name) {
+        List<Employee> employees = employeeService.getEmployeesByProvince(name);
         if (employees.isEmpty()) {
-            return new ResponseEntity<>("No employees found for code: " + provinceCode, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No employees found in province: " + name, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     // PUT — Update
-    // Usage: PUT /api/employees/update?id=5
+    // Usage: PUT /api/employees/update?id=1
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateEmployee(@RequestParam Long id, @RequestBody Employee employee) {
         String response = employeeService.updateEmployee(id, employee);
@@ -88,7 +90,7 @@ public class EmployeeController {
     }
 
     // DELETE
-    // Usage: DELETE /api/employees/delete?id=5
+    // Usage: DELETE /api/employees/delete?id=1
     @DeleteMapping(value = "/delete")
     public ResponseEntity<?> deleteEmployee(@RequestParam Long id) {
         String response = employeeService.deleteEmployee(id);

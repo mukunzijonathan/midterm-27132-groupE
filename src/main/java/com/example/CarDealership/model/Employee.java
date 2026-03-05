@@ -2,6 +2,8 @@ package com.example.CarDealership.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,17 +31,17 @@ public class Employee {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Many-to-One: Many employees → One location
+    // Many-to-One: many employees work at one location
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    // One Employee → Many Sales
+    // One employee handles many sales
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<Sale> sales;
 
-    // ─── Getters & Setters ──────────────────────
-
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

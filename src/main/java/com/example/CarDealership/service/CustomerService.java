@@ -15,7 +15,6 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // Save a new customer
     public String saveCustomer(Customer customer) {
         if (customerRepository.existsByEmail(customer.getEmail())) {
             return "Email already exists.";
@@ -24,26 +23,22 @@ public class CustomerService {
         return "Customer saved successfully.";
     }
 
-    // Get all customers
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    // Get by ID
     public Optional<Customer> getCustomerById(String id) {
         return customerRepository.findById(id);
     }
 
-    // Get by location name
     public List<Customer> getCustomersByLocationName(String name) {
         return customerRepository.findByLocation_Name(name);
     }
-    // Get by province name
+
     public List<Customer> getCustomersByProvince(String provinceName) {
-        return customerRepository.findByLocation_Name(provinceName);
+        return customerRepository.findByProvinceName(provinceName);
     }
 
-    // Update
     public String updateCustomer(String id, Customer updatedCustomer) {
         Optional<Customer> existing = customerRepository.findById(id);
         if (existing.isPresent()) {
@@ -59,7 +54,6 @@ public class CustomerService {
         return "Customer not found.";
     }
 
-    // Delete
     public String deleteCustomer(String id) {
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);

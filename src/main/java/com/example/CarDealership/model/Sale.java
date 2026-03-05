@@ -34,17 +34,17 @@ public class Sale {
     @Column(nullable = false)
     private PaymentMethod paymentMethod;
 
-    // Many Sales → One Customer
+    // Many sales → One customer
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    // Many Sales → One Employee
+    // Many sales → One employee
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    // Many-to-Many: One sale can have many cars
+    // Many-to-Many: one sale has many cars
     @ManyToMany
     @JoinTable(
         name = "sale_car",
@@ -53,13 +53,11 @@ public class Sale {
     )
     private List<Car> cars;
 
-    // ─── Payment Method Enum ─────────────────────
     public enum PaymentMethod {
         CASH, CARD
     }
 
-    // ─── Getters & Setters ──────────────────────
-
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

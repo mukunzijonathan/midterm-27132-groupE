@@ -26,6 +26,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     // POST — Save a customer
+    // Usage: POST /api/customers/add
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
         String response = customerService.saveCustomer(customer);
@@ -36,6 +37,7 @@ public class CustomerController {
     }
 
     // GET — All customers
+    // Usage: GET /api/customers/all
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
@@ -46,7 +48,7 @@ public class CustomerController {
     }
 
     // GET — By ID
-    // Usage: GET /api/customers/getById?id=abc-uuid
+    // Usage: GET /api/customers/getById?id=uuid
     @GetMapping(value = "/getById", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCustomerById(@RequestParam String id) {
         return customerService.getCustomerById(id)
@@ -54,30 +56,30 @@ public class CustomerController {
             .orElse(new ResponseEntity<>("Customer not found.", HttpStatus.NOT_FOUND));
     }
 
-    // GET — By Location name
-    // Usage: GET /api/customers/location?location=Kigali
+    // GET — By location name (any level)
+    // Usage: GET /api/customers/location?name=Kimironko
     @GetMapping(value = "/location", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getByLocationName(@RequestParam String name) {
         List<Customer> customers = customerService.getCustomersByLocationName(name);
         if (customers.isEmpty()) {
-            return new ResponseEntity<>("No customers found in location: " + name, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No customers found for location: " + name, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
-    // GET — By province code
-    // Usage: GET /api/customers/provinceCode?provinceCode=KGL
+    // GET — By province name (traverses full tree)
+    // Usage: GET /api/customers/province?name=Kigali
     @GetMapping(value = "/province", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getByProvince(@RequestParam String name) {
         List<Customer> customers = customerService.getCustomersByProvince(name);
         if (customers.isEmpty()) {
-            return new ResponseEntity<>("No customers found for province: " + name, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No customers found in province: " + name, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     // PUT — Update
-    // Usage: PUT /api/customers/update?id=abc-uuid
+    // Usage: PUT /api/customers/update?id=uuid
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateCustomer(@RequestParam String id, @RequestBody Customer customer) {
         String response = customerService.updateCustomer(id, customer);
@@ -88,7 +90,7 @@ public class CustomerController {
     }
 
     // DELETE
-    // Usage: DELETE /api/customers/delete?id=abc-uuid
+    // Usage: DELETE /api/customers/delete?id=uuid
     @DeleteMapping(value = "/delete")
     public ResponseEntity<?> deleteCustomer(@RequestParam String id) {
         String response = customerService.deleteCustomer(id);

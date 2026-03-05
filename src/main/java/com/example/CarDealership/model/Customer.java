@@ -29,13 +29,12 @@ public class Customer {
     @Column(nullable = false)
     private String phoneNumber;
 
-    // One-to-One: Customer has one Location
+    // One-to-One: one customer has one location
     @OneToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    // ─── Getters & Setters ──────────────────────
-
+    // Getters & Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

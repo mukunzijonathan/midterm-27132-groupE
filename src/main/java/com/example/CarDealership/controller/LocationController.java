@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class LocationController {
     }
 
     // GET — All locations
+    // Usage: GET /api/locations/all
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllLocations() {
         List<Location> locations = locationService.getAllLocations();
@@ -45,7 +47,7 @@ public class LocationController {
         return new ResponseEntity<>(locations, HttpStatus.OK);
     }
 
-    // GET — All provinces
+    // GET — All provinces only
     // Usage: GET /api/locations/provinces
     @GetMapping(value = "/provinces", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllProvinces() {
@@ -65,7 +67,7 @@ public class LocationController {
             .orElse(new ResponseEntity<>("Location not found.", HttpStatus.NOT_FOUND));
     }
 
-    // GET — Children of a location (districts of a province, sectors of a district etc)
+    // GET — Children of a location
     // Usage: GET /api/locations/children?parentId=uuid
     @GetMapping(value = "/children", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getChildren(@RequestParam String parentId) {
@@ -85,6 +87,17 @@ public class LocationController {
             return new ResponseEntity<>("No locations found for: " + name, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(locations, HttpStatus.OK);
+    }
+
+    // PUT — Update
+    // Usage: PUT /api/locations/update?id=uuid
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateLocation(@RequestParam String id, @RequestBody Location location) {
+        String response = locationService.updateLocation(id, location);
+        if (response.equals("Location updated successfully.")) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     // DELETE
