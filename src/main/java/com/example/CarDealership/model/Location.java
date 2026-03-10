@@ -32,7 +32,6 @@ public class Location {
     // Self-reference — Province has parent = null
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    @JsonIgnore
     private Location parent;
 
     // Children of this location
