@@ -99,4 +99,15 @@ public class CustomerController {
         }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    // GET — By province UUID
+// Usage: GET /api/customers/provinceId?id=uuid
+@GetMapping(value = "/provinceId", produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<?> getByProvinceId(@RequestParam String id) {
+    List<Customer> customers = customerService.getCustomersByProvinceId(id);
+    if (customers.isEmpty()) {
+        return new ResponseEntity<>("No customers found for province ID: " + id, HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<>(customers, HttpStatus.OK);
+}
 }

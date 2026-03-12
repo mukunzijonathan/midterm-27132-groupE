@@ -61,4 +61,7 @@ public class CustomerService {
         }
         return "Customer not found.";
     }
+    public List<Customer> getCustomersByProvinceId(String id) {
+    return customerRepository.findByProvinceId(id);
+}
 }

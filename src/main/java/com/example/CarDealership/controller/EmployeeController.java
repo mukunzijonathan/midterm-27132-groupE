@@ -99,4 +99,15 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    // GET — By province UUID
+// Usage: GET /api/employees/provinceId?id=uuid
+@GetMapping(value = "/provinceId", produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<?> getByProvinceId(@RequestParam String id) {
+    List<Employee> employees = employeeService.getEmployeesByProvinceId(id);
+    if (employees.isEmpty()) {
+        return new ResponseEntity<>("No employees found for province ID: " + id, HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<>(employees, HttpStatus.OK);
+}
 }

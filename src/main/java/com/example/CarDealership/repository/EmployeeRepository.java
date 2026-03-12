@@ -27,4 +27,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
            "e.location.parent.parent.parent.name = :name OR " +
            "e.location.parent.parent.parent.parent.name = :name")
     List<Employee> findByProvinceName(@Param("name") String name);
+
+    @Query("SELECT e FROM Employee e WHERE " +
+       "e.location.id = :id OR " +
+       "e.location.parent.id = :id OR " +
+       "e.location.parent.parent.id = :id OR " +
+       "e.location.parent.parent.parent.id = :id OR " +
+       "e.location.parent.parent.parent.parent.id = :id")
+List<Employee> findByProvinceId(@Param("id") String id);
 }

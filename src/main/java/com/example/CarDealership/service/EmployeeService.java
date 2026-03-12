@@ -60,4 +60,7 @@ public class EmployeeService {
         }
         return "Employee not found.";
     }
+    public List<Employee> getEmployeesByProvinceId(String id) {
+    return employeeRepository.findByProvinceId(id);
+}
 }
