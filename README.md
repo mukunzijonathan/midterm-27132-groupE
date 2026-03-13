@@ -1,13 +1,11 @@
 # Car Dealership Management System
-**Mid-Term Practical Assessment — Web Technology**  
-**Student:** Mukunzi Jonathan | **ID:** 27132  
-**Branch:** `mid-term-exam-carDealership`
- 
+**Mid-Term Exam — Web Technology**  
+**Student:** Mukunzi Jonathan | **ID:** 27132   
 ---
  
 ## Project Overview
  
-A Spring Boot REST API managing a car dealership system with 5 entities and a full Rwanda administrative location hierarchy tree. Built with Java 17, Spring Boot, Spring Data JPA, and PostgreSQL.
+A Spring Boot REST API managing a car dealership system with 5 entities and a full Rwanda administrative location hierarchy tree. Built with Java 21, Spring Boot, Spring Data JPA, and PostgreSQL.
  
 ---
  
@@ -158,7 +156,11 @@ private Location parent;  // Province has parent = null
 ### 2. Province Query (traverses 4 levels)
 ```java
 @Query("SELECT c FROM Customer c WHERE " +
-       "c.location.parent.parent.parent.parent.name = :name OR ...")
+       "c.location.name = :name OR " +
+       "c.location.parent.name = :name OR " +
+       "c.location.parent.parent.name = :name OR " +
+       "c.location.parent.parent.parent.name = :name OR " +
+       "c.location.parent.parent.parent.parent.name = :name")
 List<Customer> findByProvinceName(@Param("name") String name);
 ```
  
