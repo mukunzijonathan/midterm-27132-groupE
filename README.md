@@ -190,5 +190,12 @@ if (customerRepository.existsByEmail(customer.getEmail())) {
     inverseJoinColumns = @JoinColumn(name = "car_id"))
 private List<Car> cars;
 ```
+
+### ERD
+
+### Entity Relationship Diagram (ERD)
+
+<img src="screenshots/ERD.png" width="700">
+---
  
 ---
