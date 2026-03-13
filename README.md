@@ -85,7 +85,7 @@ CREATE DATABASE "car-dealership";
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/car-dealership
 spring.datasource.username=postgres
-spring.datasource.password=(I'll add my password)
+spring.datasource.password=(can't show my password)
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
